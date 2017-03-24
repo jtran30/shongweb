@@ -5,6 +5,15 @@
     <title>Shifa's Web</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <style>
+        #mainBody {
+            background-image: url("img/background.jpg");
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            transition: background 1s ease;
+        }
+        
         body,
         html {
             width: 100%;
@@ -15,7 +24,6 @@
         }
         
         .bgimg-1,
-        .bgimg-2,
         .bgimg-3 {
             position: relative;
             background-attachment: fixed;
@@ -31,7 +39,17 @@
         
         .bgimg-2 {
             background-image: url("img/background2.jpg");
-            min-height: 400px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 100%;
+            padding-top: 400%;
+            /* Set position in parallax */
+            padding-bottom: 200%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
         
         .bgimg-3 {
@@ -41,14 +59,15 @@
         
         .caption {
             position: absolute;
-            padding-top: 1%;
+            padding-top: 25%;
             left: 0;
-            top: 50%;
+            top: 25%;
             width: 100%;
             height: 10%;
             text-align: center;
+            /* Do not let parent css be affected directly, see below "pointer-events"  */
             color: #000;
-            transition: top 1s, height 1s, width 1s;
+            transition: top 1s, height 1s, width 1s, padding-top 1s;
             pointer-events: none;
         }
         
@@ -67,21 +86,27 @@
             margin-right: auto;
             text-align: center;
             pointer-events: auto;
+            /* Example where child overrides parent and modify parent  */
+            overflow: hidden;
+        }
+        
+        .caption:hover {
+            /*Parent Div */
+            top: 0%;
+            height: 180%;
+            padding-top: 1% !important;
         }
         
         .border:hover {
+            /* Child Div */
             background-color: rgba(0, 0, 0, .1);
             color: rgba(255, 255, 255, 0);
             border-radius: 20%;
             width: 95%;
         }
         
-        .caption:hover {
-            top: 0%;
-            height: 180%;
-        }
-        
         .hovered {
+            /* Locked in hover mode */
             background-color: rgba(0, 0, 0, .1);
             color: rgba(255, 255, 255, 0);
             border-radius: 20%;
@@ -89,8 +114,10 @@
         }
         
         .hovered2 {
+            /* Locked in hover mode */
             top: 0%;
             height: 180%;
+            padding-top: 1% !important;
         }
         
         .mainVideo {
@@ -148,11 +175,301 @@
             font: 20px "Lato", sans-serif;
             color: #111;
         }
+        
+        .title {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            color: rgb(255, 255, 255);
+        }
+        
+        .parallax {
+            display: block;
+        }
+        
+        .parallax__layer {
+            display: block;
+        }
+        
+        .parallax__layer2 {
+            display: block;
+        }
+        
+        .parallax__layer-video {
+            display: block;
+        }
+        
+        .parallax__layerBorder1 {
+            display: block;
+        }
+        
+        .parallax {
+            overflow: auto;
+            -webkit-perspective: 300px;
+            perspective: 300px;
+            -webkit-perspective-origin-x: 100%;
+            perspective-origin-x: 100%;
+            height: 500px;
+            /* fallback for older browsers */
+            height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        
+        .parallax__group {
+            position: relative;
+            height: 500px;
+            /* fallback for older browsers */
+            height: 100vh;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+        }
+        
+        .parallax__large_group {
+            position: relative;
+            height: 500px;
+            /* fallback for older browsers */
+            height: 200vh;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+        }
+        
+        .parallax__layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            -webkit-transform-origin-x: 100%;
+            transform-origin-x: 100%;
+        }
+        
+        .parallax__layer--base {
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            z-index: 4;
+        }
+        
+        .parallax__layer--plus {
+            /*-webkit-transform: translateZ(90px) scale(.7);*/
+            -webkit-transform: translateZ(90px) scale(1);
+            transform: translateZ(90px) scale(1);
+            z-index: 1;
+        }
+        
+        .parallax__layer--minus {
+            /*-webkit-transform: translateZ(-300px) scale(2);*/
+            -webkit-transform: translateZ(90px) scale(1);
+            transform: translateZ(-300px) scale(1);
+            z-index: 3;
+        }
+        
+        .parallax__layer--back {
+            /*   -webkit-transform: translateZ(-600px) scale(3);*/
+            -webkit-transform: translateZ(90px) scale(1);
+            transform: translateZ(-600px) scale(1);
+            z-index: 2;
+        }
+        
+        @media only screen and (min-width: 1024px) {}
+        
+        #footer {
+            position: fixed;
+            left: 1em;
+            bottom: 1em;
+            font-size: 0.8125rem;
+            padding-left: 5%;
+            padding-right: 5%;
+            color: #000;
+            padding: 20px
+        }
+        
+        #footer::after {
+            clear: both;
+            content: "";
+            display: block
+        }
+        
+        @media screen and (min-width: 760px) {
+            #footer {
+                padding-left: 20px;
+                padding-right: 20px
+            }
+        }
+        
+        #footer>ul {
+            display: block;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        #footer>ul li {
+            display: inline-block;
+            width: 50px;
+            padding: 0 7.5px;
+            margin-bottom: 15px;
+        }
+        
+        #footer>li {
+            opacity: 1;
+            transition: opacity .25s;
+        }
+        
+        #footer>li:hover {
+            opacity: .5;
+        }
+        
+        @media screen and (min-width: 760px) {
+            #footer>ul.social-links {
+                float: left;
+            }
+        }
+        
+        #footer>ul.social-links li {
+            padding: 0 10px;
+        }
+        
+        @media screen and (min-width: 760px) {
+            #footer>ul.social-links li {
+                padding: 0 10px 0 0;
+            }
+        }
+        
+        #footer>ul.social-links li a {
+            position: relative;
+            width: 23px;
+            height: 15px;
+            float: left;
+        }
+        
+        #footer>ul.social-links li a img {
+            height: 2rem
+        }
+        
+        #footer>ul.social-links li a img.social-soundcloud {
+            height: 1.5rem;
+            position: relative;
+            left: 5px;
+        }
+        
+        #footer>ul.social-links li a img.social-vimeo {
+            height: 2.5rem;
+            position: relative;
+            top: -8px;
+            left: 2px;
+        }
+        
+        #footer>ul.social-links li a img.social-pinterest {
+            height: 5rem;
+            position: relative;
+            top: -23px;
+            left: -15px;
+        }
+        
+        #footer>ul.site-links {
+            float: right
+        }
+        
+        #headerMenu {
+            position: fixed;
+            left: 1em;
+            top: 1em;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            background-color: rgba(255, 255, 255, 0.5);
+            width: 95%;
+            z-index: 9;
+            overflow: hidden;
+            font-size: 20px;
+        }
+        
+        #headerMenu>li {
+            display: inline;
+            float: left;
+        }
+        
+        #headerMenu>a {
+            display: block;
+            padding: 8px;
+            float: left;
+            
+        }
+        
+        #headerMenu>li a {
+            width: 60px;
+            padding: 14px 16px;
+            text-decoration: none;
+            color: black;
+            text-align: center;
+            transition: color .25s, background-color .5s;
+        }
+        
+        #headerMenu>li:hover a {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: rgba(255, 255, 255, 1);
+        }
     </style>
 </head>
 
-<body>
+<body id="mainBody">
+    <ul id="headerMenu">
+        <li><a href="default.asp">Home</a></li>
+        <li><a href="news.asp">News</a></li>
+        <li><a href="contact.asp">Contact</a></li>
+        <li><a href="about.asp">About</a></li>
+    </ul>
 
+
+    <div id="parallaxBody" class="parallax">
+
+        <div class="parallax__group">
+            <div id="videoCaption2" class="caption parallax__layer parallax__layer--base">
+                <div id="videoCaption" class="border">TOUCH TO SEE
+                    <iframe id="video1ID" class="mainVideo" src="https://www.youtube.com/embed/6wDSFQFKSo0?rel=0&amp;controls=0&amp;showinfo=0;enablejsapi=1;wmode=transparent" frameborder="0"></iframe>
+                    <a href="#firstAnchor" class="l1" id="video1ID">Link1</a>
+                    <a href="#secondAnchor" class="l2" id="video1ID">Link2</a>
+                    <a href="#thirdAnchor" class="l3" id="video1ID">Link3</a>
+                </div>
+            </div>
+        </div>
+        <div class="parallax__group"></div>
+        <div class="parallax__group">
+            <img class="parallax__layer parallax__layer--back" src="img/square.png" style="width:25%; left:0%"></img>
+            <img class="parallax__layer parallax__layer--minus" src="img/square1.png" style="width:25%; left:15%"></img>
+            <img class="parallax__layer parallax__layer--base" src="img/square.png" style="width:25%; left:60%">
+            <div class="parallax__layer parallax__layer--base" style="position: absolute;top: 25%; left: 25%">
+                <span style="color: white; font-size: 2vw; background-color: rgba(0,0,0,0.5);border-style: solid;border-color:black;">Put something cool here</span>
+            </div>
+            </img>
+        </div>
+
+        <div class="parallax__group">
+            <img class="parallax__layer parallax__layer--minus" src="img/square1.png" style="width:25%; left:-30%"></img>
+            <img class="parallax__layer parallax__layer--base" src="img/square.png" style="width:25%; left:15%"></img>
+            <div class="parallax__layer parallax__layer--base" style="top: 25%; left: 60%">
+                <span style="color: white; font-size: 2vw; background-color: rgba(0,0,0,0.5);border-style: solid;border-color:black;">Put something cool here</span>
+            </div>
+            <img class="parallax__layer parallax__layer--plus" src="img/square1.png" style="width:25%; left:25%"></img>
+        </div>
+
+        <div class="parallax__group">
+            <div class="parallax__layer parallax__layer--back">
+                <span style="font-size: 30px" class="title">Random back text</span>
+            </div>
+            <div class="parallax__layer parallax__layer--base">
+                <span style="font-size: 30px" class="title">Random base text</span>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+    <!--
     <div class="bgimg-1">
         <div id="videoCaption2" class="caption">
             <div id="videoCaption" class="border">TOUCH TO SEE
@@ -166,16 +483,20 @@
         </div>
     </div>
 
+
+
     <div class="divHover" style="color: #777;background-color:white;text-align:center;padding:50px 80px;text-align: justify;">
         <h3 style="text-align:center;">Put your text here</h3>
         <p>Put your text here</p>
     </div>
 
-    <div id="firstAnchor" class="bgimg-2 divHover" >
+    <div id="firstAnchor" class="bgimg-2 divHover">
         <div class="caption">
             <span id="videoCaption" class="border" style="background-color:transparent;font-size:25px;color: #f7f7f7;">Put your text here</span>
         </div>
+
     </div>
+
 
     <div style="position:relative;" class="divHover">
         <div style="color:#ddd;background-color:#282E34;text-align:center;padding:50px 80px;text-align: justify;">
@@ -198,7 +519,7 @@
     <div id="thirdAnchor" class="bgimg-1">
         <p>By: Jonathan Tran</p>
     </div>
-
+-->
 
 
 
@@ -227,15 +548,24 @@
 
         });
 
-        $(".divHover").bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function() {
-            $("#videoCaption").removeClass('hovered');
-            $("#videoCaption2").removeClass('hovered2');
-            $("[id=video1ID]").hide();
-
-            document.getElementById('video1ID').contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
 
 
-        });
+        $(window).click(function(e) { //Handle click events
+            if (e.target.id != "videoCaption") {
+                $("#videoCaption").removeClass('hovered');
+                $("#videoCaption2").removeClass('hovered2');
+                $("[id=video1ID]").hide();
+                document.getElementById('video1ID').contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            }
+
+            //console.log($.type(e.target)); // get clicked item
+
+        })
+
+
+
+
+
 
         $("a").on('click', function(event) { //https://www.w3schools.com/jquery/tryit.asp?filename=tryjquery_eff_animate_smoothscroll
 
@@ -258,8 +588,44 @@
                 });
             } // End if
         });
+
+
+
+
+        $("#parallaxBody").scroll(function() {
+
+            if ($("#parallaxBody").scrollTop() + $("#parallaxBody").height() / 2 > $("#parallaxBody")[0].scrollHeight / 2) {
+                $("#mainBody").css("background-image", "url(img/background2.jpg)");
+            }
+            else {
+                $("#mainBody").css("background-image", "url(img/background.jpg)");
+            }
+        });
     </script>
 
+
+    <footer id='footer'>
+        <ul class='social-links'>
+            <li>
+                <a target="_blank" href="https://www.instagram.com"><img alt="Instagram" class="social-instagram" src="https://cdn-assets.net2b.eu/assets/offwhite/social/instagram-e654ec1638a2ce4c56cd9013b97e78536ab9e6b5c2674e943e672e98c722c2d1.svg" /></a>
+            </li>
+            <li>
+                <a target="_blank" href="https://twitter.com"><img alt="Twitter" class="social-twitter" src="https://cdn-assets.net2b.eu/assets/offwhite/social/twitter-9c22693b5944ec20614da1af6f6a33cffc48a3702ed2be02ffbf1a62c08bfada.svg" /></a>
+            </li>
+            <li>
+                <a target="_blank" href="https://it.pinterest.com"><img alt="Pinterest" class="social-pinterest" src="https://cdn-assets.net2b.eu/assets/offwhite/social/pinterest-5d34d6b85a4061ba95d90f3495974e091ca0acbd036f29d21dfee21b4550c6da.svg" /></a>
+            </li>
+            <li>
+                <a target="_blank" href="https://vimeo.com"><img alt="Vimeo" class="social-vimeo" src="https://cdn-assets.net2b.eu/assets/offwhite/social/vimeo-e2765c92b3b159fbea162e506ab835894646150b1182e3d6840952061076871e.svg" /></a>
+            </li>
+            <li>
+                <a target="_blank" href="https://soundcloud.com"><img alt="Soundcloud" class="social-soundcloud" src="https://cdn-assets.net2b.eu/assets/offwhite/social/soundcloud-0562c31a98f03cc68d0a2f0015a0ba3777462ad6c4ee291223dd91ffe5b532ab.svg" /></a>
+            </li>
+        </ul>
+    </footer>
 </body>
+
+
+
 
 </html>
